@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Nighana</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/custom.css">
+  </head>
+  <body>
+  	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+        <img src="images/Nighana.png" alt="Logo" style="border-radius: 25%; width: 50px; height: 50px;">
+		      <a class="navbar-brand" href="/"><span class="flaticon-burger-1 mr-1"></span>Ni-G-hana<br><small>West Africa</small></a>
+		      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+		        <span class="oi oi-menu"></span> Menu
+		      </button>
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="/menu" class="nav-link">Menu</a></li>
+	          <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+	          <!-- <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li> -->
+	          <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+            <li class="nav-item active"><a href="/cart" class="nav-link">Cart</a></li>
+	        </ul>
+	      </div>
+		  </div>
+	  </nav>
+    <!-- END nav -->
+
+    
+    
+
+    
+
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section ftco-animate text-center">
+            <h2 class="mb-4">Your cart</h2>
+            <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
+            <p class="mt-5">Proceed to checkout with Paypal</p>
+          </div>
+        </div>
+    		<div class="row">
+          <% let totalAmount = 0; %>
+          <% cart.forEach(item => { %>
+    			<div class="col-md-3 text-center ftco-animate">
+      			<div class="menu-wrap">
+      				<a href="#" class="menu-img img mb-4" style="background-image: url(./<%= item.d_image %>);"></a>
+      				<div class="text">
+      					<h3><a href="#"><%= item.d_name %></a></h3>
+      					<p class="price"><span>$<%= item.d_cost %> x <%= item.quantity %></span></p>
+      				</div>
+              <form action="/removeFromCart:<%= item.d_id %>" method="POST"  style="display: flex; justify-content: center; align-items: center;">
+                <button type="submit" class="btn btn-white btn-outline-white" style="font-size: 16px;">
+                  Remove
+                </button>
+              </form>
+      			</div>
+      		</div>
+          <% totalAmount += item.d_cost * item.quantity; %>
+          <% }) %>
+
+      		
+      		
+    		</div><br>
+        <div class="col-md-3 text-center ftco-animate" >
+          <div class="total-amount" style="display: flex; justify-content: center; align-items: center;">
+            <h3>Total: $<%= totalAmount.toFixed(2) %></h3>
+          </div>
+        </div>
+        <br>
+        
+        <% if (totalAmount.toFixed(2) === '0.00') { %>
+          
+          <form action="/menu" method="GET"  style="display: flex; justify-content: center; align-items: center;">
+            <button type="submit" class="btn btn-white btn-outline-white" style="font-size: 16px;">
+              Add some food
+            </button>
+          </form>
+      <% } else { %>
+        <form action="/pay" method="POST"  style="display: flex; justify-content: center; align-items: center;">
+          <button type="submit" class="btn btn-white btn-outline-white" style="font-size: 16px;">
+            Checkout
+          </button>
+        </form>
+      <% } %>
+        
+        
+    	</div>
+    </section>
+
+<%- include("partials/footer.ejs") %>
